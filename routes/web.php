@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\{RoleController,HomeController,CategoryController,SubcategoryController};
+use App\Http\Controllers\{RoleController,HomeController,CategoryController,SubcategoryController,ProductController,FrontendController};
 
 /*
 |--------------------------------------------------------------------------
@@ -14,9 +14,7 @@ use App\Http\Controllers\{RoleController,HomeController,CategoryController,Subca
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/',[FrontendController::class,'index']);
 
 Auth::routes();
 
@@ -49,6 +47,17 @@ Route::prefix('subcategory')->group(function(){
   Route::get('/index',[SubcategoryController::class,'index'])->name('subcategory.index');
 });
 // all Subcategory routes ends
+
+// all Products routes starts
+Route::prefix('product')->group(function(){
+  Route::get('/create',[ProductController::class,'create'])->name('product.create');
+  Route::post('/store',[ProductController::class,'store'])->name('product.store');
+  Route::get('/index',[ProductController::class,'index'])->name('product.index');
+  Route::get('/edit/{id}',[ProductController::class,'edit'])->name('product.edit');
+  Route::get('/delete/{id}',[ProductController::class,'delete'])->name('product.delete');
+  Route::post('/update',[ProductController::class,'update'])->name('product.update');
+});
+// all Products routes ends
 
 Route::get('/user/dashboard',function(){
     return "user dashboard pore kaz kora lagbe";
